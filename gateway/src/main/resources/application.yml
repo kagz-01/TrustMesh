@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: dummy_service
+          uri: http://httpbin.org:80 # Using httpbin as a dummy target service
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+            - name: ZeroTrustFilter
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

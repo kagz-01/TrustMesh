@@ -23,10 +23,13 @@ services:
     image: openpolicyagent/opa:latest
     ports:
       - "8181:8181"
+    volumes:
+      - ./opa:/opa
     command:
       - "run"
       - "--server"
       - "--log-level=debug"
+      - "/opa/policy.rego"
 
   management-ui:
     build:
