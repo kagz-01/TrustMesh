@@ -1,0 +1,1068 @@
+﻿ADVANCED TECH PLATFORMS
+
+
+Comprehensive Reference Guide
+
+
+8 Cutting-Edge Platform Deep-Dives
+
+
+
+
+
+
+Covering: Security  |  DevSecOps  |  AI  |  Blockchain  |  GitOps  |  Post-Quantum Cryptography
+
+
+Research-Backed  |  Industry-Referenced  |  Future-Ready
+
+
+
+
+
+
+Edition: 2025-2026  |  For Academic, Professional & Development Use
+	
+
+________________
+
+
+PROJECT 01
+TrustMesh
+Decentralized AI-Driven Zero Trust Security Platform
+	
+
+Overview & Strategic Context
+TrustMesh is a cloud-native security platform that eliminates implicit trust in microservice environments. It enforces continuous, multi-factor verification across identity, behaviour, and policy for every request, internal or external. This approach aligns with the 2025 industry consensus that Zero Trust has evolved from a framework into an operational necessity.
+According to a 2023 Gartner survey, 63% of organisations globally had fully or partially implemented a Zero Trust strategy. By 2025, leading vendors including Palo Alto Networks, Zscaler, CrowdStrike, and cloud-native innovators like AccuKnox and Prophaze have standardised on Zero Trust as the baseline for enterprise security. The shift is driven by the realisation that cloud-native environments — serverless functions, ephemeral containers, distributed microservices — break the assumptions of perimeter-based models.
+
+
+Problem Space
+Traditional cloud systems grant persistent trust after a single authentication event. This creates three classes of risk:
+✔  Lateral Movement Attacks — attackers who breach one service escalate freely across the network
+	✔  Compromised Service Accounts — static credentials become persistent backdoors
+	✔  Insider Threats — authorised identities abused by malicious or negligent actors
+	✔  AI-Augmented Attacks — adversaries using machine-speed automation for social engineering and credential stuffing
+	✔  Dynamic Workload Risk — serverless and ephemeral containers defeat static policy enforcement
+	
+
+How It Works — Detailed Flow
+TrustMesh operates as a policy-enforcement overlay on top of a Kubernetes service mesh. Every network interaction is intercepted and evaluated before being allowed.
+1
+	Service or user initiates a request — the API Gateway intercepts before any payload reaches the destination service.
+	2
+	Blockchain Identity Verification — the requesting entity's identity is resolved against a decentralised identity registry stored on-chain. Only cryptographically verified identities proceed.
+	3
+	Behavioural Risk Scoring — the AI engine runs a real-time anomaly score against the request's metadata: timing, volume, endpoint pattern, geolocation, and deviation from baseline.
+	4
+	Policy Evaluation — the Open Policy Agent (OPA) evaluates the request against active Rego policies, considering identity, risk score, resource sensitivity, and time.
+	5
+	Allow / Deny — permitted requests are forwarded; denied requests are blocked and trigger an alert. Borderline requests can trigger step-up authentication.
+	6
+	Immutable Audit Log — every decision (allow or deny) is written to IPFS, creating a tamper-evident audit trail. Prometheus scrapes event metrics; Grafana renders the live dashboard.
+	
+
+Architecture Components
+Category
+	Details
+	API Gateway
+	Kotlin / Spring Boot — intercepts all inter-service calls, applies rate limiting, routes to enforcement layer
+	AI Engine
+	Python / FastAPI — Scikit-learn anomaly detection model, trained on baseline traffic patterns, outputs risk scores 0–100
+	Identity Layer
+	Solidity smart contract on Ethereum — decentralised identity registry (DID), supports self-sovereign identity (SSI) principles
+	Policy Engine
+	Open Policy Agent — Rego-based policy-as-code; policies version-controlled in Git
+	Service Mesh
+	Istio — mTLS enforcement, traffic observability, sidecar proxy injection
+	Log Storage
+	IPFS — immutable, content-addressed, decentralised log storage
+	Monitoring
+	Prometheus + Grafana — real-time telemetry, anomaly event dashboards, SLA tracking
+	Orchestration
+	Kubernetes — microservices deployment, autoscaling, namespace isolation
+	
+
+Key Features
+✔  Decentralised Identity Verification — no central LDAP or SSO to compromise
+	✔  AI-Based Anomaly Detection — real-time ML risk scoring per request
+	✔  Zero-Trust Policy Enforcement — deny by default, allow by explicit policy match
+	✔  Self-Sovereign Identity (SSI) Compatibility — users and services own their credentials
+	✔  eBPF-Ready Architecture — compatible with runtime enforcement tools like AccuKnox / KubeArmor
+	✔  Immutable Audit Trail — IPFS-backed logs, court-admissible forensic evidence
+	✔  Continuous Verification — "authenticate once, trust always" is replaced by per-request evaluation
+	✔  Just-In-Time (JIT) Access — zero standing privileges; access granted only for the duration needed
+	✔  Adaptive MFA Triggers — risk score thresholds automatically escalate authentication requirements
+	✔  Compliance Ready — NIST Zero Trust Architecture (SP 800-207), HIPAA, SOC 2, GDPR alignment
+	
+
+Technology Stack — Full Reference
+Category
+	Details
+	Backend Language
+	Kotlin (Spring Boot 3.x) — API gateway, policy coordination
+	AI Service
+	Python 3.11 + FastAPI — ML inference API, Scikit-learn IsolationForest for anomaly detection
+	Blockchain
+	Solidity 0.8.x on Ethereum / Polygon — DID registry, event logging smart contracts
+	Storage
+	IPFS (via Kubo or Pinata) — audit log persistence
+	Service Mesh
+	Istio 1.20+ with Envoy sidecars — mTLS, traffic shaping
+	Policy Engine
+	Open Policy Agent (OPA) 0.60+ — Rego policies, bundle server
+	Orchestration
+	Kubernetes 1.29+ — EKS/GKE/AKS compatible
+	Monitoring
+	Prometheus 2.x + Grafana 10.x — dashboards, alerts
+	Identity Protocol
+	W3C DID + Verifiable Credentials (VC) standard
+	Auth Standards
+	OAuth 2.0, OIDC, SPIFFE/SPIRE for workload identity
+	
+
+Future Enhancements (2026+)
+✔  Post-Quantum Cryptography Integration — upgrade identity layer to ML-KEM / ML-DSA (NIST FIPS 203/204)
+	✔  Federated Learning — train anomaly models across organisations without sharing raw data
+	✔  AI Agent Security — extend Zero Trust to LLM and AI agent access (Xage-style fabric model)
+	✔  Edge Deployment — enforce Zero Trust at IoT / OT edge nodes
+	✔  Graph-based Lateral Movement Detection — model service-to-service call graphs to detect blast radius
+	
+
+Expected Deliverables
+Category
+	Details
+	Gateway
+	Working Zero Trust API Gateway with request interception and routing
+	AI Engine
+	Trained anomaly detection model with REST scoring API
+	Blockchain
+	Deployed DID smart contract + Hardhat test suite
+	Dashboard
+	Grafana dashboard showing live threat blocks, risk scores, and policy hits
+	Docs
+	Architecture diagram, API reference, deployment runbook
+	________________
+
+
+PROJECT 02
+OpsShield
+Autonomous DevSecOps Security Platform
+	
+
+Overview & Strategic Context
+PipelineSentinel is a fully automated DevSecOps platform that embeds security controls into every stage of the CI/CD pipeline — from first commit to production deployment. The 2025 DevSecOps landscape is defined by the principle of 'shift-left security': vulnerabilities found at design time cost 100x less to fix than those discovered post-release.
+Industry research from Datadog's State of DevSecOps 2025 confirms that only 18% of identified vulnerabilities are truly critical, yet most teams lack tools to distinguish them. AI-powered prioritisation is now the differentiator. CrowdStrike's March 2025 addition of AI-powered Network Vulnerability Assessment within Falcon Exposure Management highlights how major vendors are embedding ML-driven triage directly into DevSecOps workflows.
+
+
+Problem Space
+✔  Dependency Attacks — malicious or outdated packages silently introduced via npm, pip, Maven
+	✔  Build Artifact Tampering — unsigned binaries swapped during CI/CD transit
+	✔  Secret Leaks — API keys, tokens, passwords committed to repositories
+	✔  Container Vulnerabilities — base image CVEs reaching production undetected
+	✔  Infrastructure Drift — IaC misconfigurations creating exploitable cloud resources
+	✔  Supply Chain Compromise — third-party CI actions or libraries injecting malicious code
+	
+
+How It Works — Pipeline Flow
+1
+	Developer commits code — pre-commit hooks run SAST (static analysis) and secret detection immediately.
+	2
+	Pull Request opened — AI engine scans changed files, scores risk, flags high-severity issues inline in the PR.
+	3
+	Build Stage — SCA (software composition analysis) checks all dependencies against CVE databases. Trivy scans the container image. Only images passing vulnerability thresholds proceed.
+	4
+	Artifact Signing — cosign signs the container image via OIDC token. SLSA provenance attestation is generated.
+	5
+	Blockchain Anchoring — artifact SHA-256 hash + provenance metadata written to blockchain smart contract. Immutable record created.
+	6
+	Policy Gate — OPA evaluates deployment readiness: is the artifact signed? Is its CVSS score below threshold? Is provenance verified?
+	7
+	Deployment — Kubernetes rolls out the artifact. Falco runtime agent starts monitoring syscalls, network connections, and file access.
+	8
+	Runtime Monitoring — any deviation from expected container behaviour (e.g., shell spawned inside container) triggers an immediate alert and optional automatic pod isolation.
+	
+
+Architecture Components
+Category
+	Details
+	Backend
+	Python 3.11 + FastAPI — central control API, scan orchestration, result aggregation
+	CI/CD
+	GitHub Actions — workflow triggers, environment isolation, OIDC token issuance
+	SAST
+	Semgrep / Bandit — static analysis for code patterns, injection flaws
+	SCA
+	Snyk / Trivy — dependency CVE scanning, SBOM generation (SPDX/CycloneDX format)
+	Secrets Scanning
+	GitGuardian / truffleHog — pre-commit and CI-stage secret detection
+	Container Sign
+	Sigstore cosign — keyless signing via OIDC, Rekor transparency log
+	Provenance
+	SLSA framework (v1.0) — build provenance attestations, in-toto format
+	Blockchain
+	Solidity smart contract — artifact hash registry, immutable deployment record
+	Runtime Security
+	Falco — eBPF-based syscall monitoring, threat rule engine
+	Policy Engine
+	OPA — policy-as-code gates at every pipeline stage
+	Monitoring
+	Prometheus + Grafana — pipeline health, security metrics, incident timeline
+	
+
+Key Features
+✔  Shift-Left Security — vulnerabilities caught at commit time, not post-deployment
+	✔  Agentic AI Security Testing — autonomous agents run context-aware security tests without human triggers
+	✔  SLSA Compliance — Supply-chain Levels for Software Artifacts framework built-in
+	✔  SBOM Generation — Software Bill of Materials automatically produced at each build
+	✔  Keyless Artifact Signing — cosign + OIDC; no long-lived signing keys to manage
+	✔  Blockchain Artifact Registry — immutable provenance ledger for every build
+	✔  Runtime Threat Detection — Falco detects attacks in live containers using eBPF
+	✔  Policy-as-Code Gates — all security decisions are code, version-controlled and auditable
+	✔  Automated Remediation — pull requests automatically opened for fixable vulnerabilities
+	✔  Compliance Reporting — SOC 2, HIPAA, ISO 27001 evidence generated automatically
+	
+
+Technology Stack — Full Reference
+Category
+	Details
+	Language
+	Python 3.11
+	API Framework
+	FastAPI — async, OpenAPI docs auto-generated
+	CI/CD Platform
+	GitHub Actions (or GitLab CI / Jenkins as alternatives)
+	Container Runtime
+	Docker + containerd
+	Orchestration
+	Kubernetes 1.29+ (EKS / GKE / AKS)
+	SAST Tools
+	Semgrep, Bandit, CodeQL
+	SCA Tools
+	Snyk, Trivy, Mend.io
+	Signing
+	Sigstore (cosign, Fulcio, Rekor)
+	Provenance
+	SLSA v1.0, in-toto Attestation Framework (ITE-6)
+	Blockchain
+	Solidity 0.8.x, Hardhat, Ethereum / Polygon
+	Runtime Security
+	Falco 0.37+, eBPF-based
+	Policy
+	Open Policy Agent + Kyverno (Kubernetes-native)
+	Monitoring
+	Prometheus + Grafana + ELK Stack
+	
+
+Industry Standards Alignment
+✔  NIST SP 800-218 (Secure Software Development Framework) — lifecycle security practices
+	✔  SLSA v1.0 — Supply-chain security levels; target SLSA Level 3+ for isolated builds
+	✔  SSDF (Secure Software Development Framework) — CISA/NIST joint guidance
+	✔  EO 14028 — US Executive Order on Improving the Nation's Cybersecurity (SBOM mandate)
+	✔  CIS Benchmarks — Kubernetes, Docker hardening baselines
+	
+
+Expected Deliverables
+Category
+	Details
+	CI/CD Pipeline
+	End-to-end secure pipeline in GitHub Actions with all scan stages
+	Scan Engine
+	Consolidated vulnerability detection API with severity triage
+	Blockchain Module
+	Smart contract artifact registry + Hardhat tests
+	SBOM Generator
+	Automatic SPDX/CycloneDX SBOM at build time
+	Dashboard
+	Real-time security posture dashboard, incident timeline
+	________________
+
+
+PROJECT 03
+VulnSight
+AI-Powered Vulnerability Scanner
+	
+
+Overview & Strategic Context
+VulnSight is a machine-learning-based code vulnerability scanner that trains on labelled vulnerability datasets and detects security flaws in source code automatically. It goes beyond pattern matching (like traditional SAST) by learning from real-world CVEs, bug bounty reports, and security research to identify novel vulnerability patterns.
+The shift toward AI-native scanning is being driven by the explosion of AI-generated code in enterprise codebases. At the DevSecOps Summit 2025, industry leaders highlighted that LLM-generated code proliferates without adequate security review, creating unprecedented attack surfaces. Traditional rule-based scanners cannot keep pace — learned models that adapt to new patterns are the solution.
+
+
+Problem Space
+✔  Manual code review is slow — a senior reviewer analyses ~150 lines/hour at peak; large codebases are impossible to manually audit
+	✔  Rule-based scanners generate excessive false positives — teams experience 'alert fatigue' and begin ignoring warnings
+	✔  AI-generated code may contain subtle flaws not matching any existing rule pattern
+	✔  Novel vulnerability classes emerge faster than rule sets can be updated
+	✔  Context-blind analysis — tools that flag without understanding call graphs and data flows miss critical exploitable paths
+	
+
+How It Works — Scanning Pipeline
+1
+	Code Ingestion — source code is uploaded via API or connected to a Git repository. Supported: Python, JavaScript, Java, Go, Rust, C/C++.
+	2
+	Pre-processing — abstract syntax tree (AST) extraction, control-flow graph (CFG) construction, data-flow analysis.
+	3
+	Feature Engineering — numerical feature vectors derived from: function signatures, taint flows, API call sequences, cyclomatic complexity, dependency graph metrics.
+	4
+	ML Inference — trained ensemble model (Gradient Boosting + Graph Neural Network) predicts vulnerability class and severity for each code unit.
+	5
+	Reachability Analysis — exploitability is assessed: is the vulnerable function actually reachable from an attacker-controlled input?
+	6
+	Risk Scoring — each finding gets a CVSS-derived risk score (0–10) and a confidence rating (low/medium/high).
+	7
+	Remediation Suggestions — LLM-powered fix suggestions generated per finding, referencing CWE and OWASP Top 10 mitigations.
+	8
+	Report Generation — structured JSON/HTML report, dashboard visualisation, CI/CD pipeline integration.
+	
+
+Vulnerability Classes Detected
+✔  Injection Flaws — SQL injection, OS command injection, LDAP injection, XPath injection
+	✔  Insecure Deserialization — Java ObjectInputStream, Python pickle, PHP unserialize
+	✔  Broken Authentication — hardcoded credentials, weak session management, JWT algorithm confusion
+	✔  Cryptographic Failures — weak cipher selection, hardcoded secrets, improper key management
+	✔  SSRF (Server-Side Request Forgery) — unvalidated URL inputs in HTTP client calls
+	✔  Path Traversal — unvalidated file paths, directory listing exposure
+	✔  Race Conditions — TOCTOU (time-of-check-time-of-use) flaws in multi-threaded code
+	✔  Insecure Direct Object Reference (IDOR) — missing authorisation checks on resource access
+	✔  Log Injection — unescaped user input in logging statements
+	✔  Supply Chain: Dependency Confusion — package name squatting, typosquatting detection
+	
+
+ML Model Architecture
+Category
+	Details
+	Feature Extraction
+	AST parsing (tree-sitter), CFG/DFG construction (Joern)
+	Primary Model
+	XGBoost Gradient Boosting — fast, interpretable, high precision on tabular code features
+	Graph Model
+	Graph Neural Network (PyTorch Geometric) — models code as a graph for contextual analysis
+	Ensemble
+	Stacked model combining both outputs; calibrated probability scores
+	LLM Integration
+	GPT-4o / Claude for natural-language remediation suggestions
+	Training Data
+	NVD CVE database, NIST Software Assurance Reference Dataset (SARD), OSS-Fuzz findings
+	Reachability
+	CodeQL reachability queries for taint-flow verification
+	False Positive Filter
+	Confidence thresholding + VEX (Vulnerability Exploitability eXchange) integration
+	
+
+Technology Stack — Full Reference
+Category
+	Details
+	Language
+	Python 3.11
+	ML Frameworks
+	Scikit-learn, XGBoost, PyTorch, PyTorch Geometric
+	Code Analysis
+	tree-sitter (AST), Joern (CPG), CodeQL
+	API
+	FastAPI — async REST endpoints, OpenAPI documentation
+	Database
+	PostgreSQL (findings), Redis (caching scan results)
+	Search
+	Elasticsearch — full-text search over findings and code
+	Visualisation
+	Kibana + custom React dashboard
+	Containerisation
+	Docker + Kubernetes (Helm chart)
+	CI Integration
+	GitHub Actions, GitLab CI, Jenkins, Azure DevOps plugins
+	Reporting
+	PDF/HTML reports, SARIF format (GitHub Code Scanning compatible)
+	
+
+Key Features
+✔  Context-Aware Scanning — understands taint flows, not just pattern matching
+	✔  Reachability Analysis — distinguishes exploitable findings from dead code
+	✔  Multi-Language Support — Python, JavaScript, Java, Go, Rust, C/C++
+	✔  SARIF Output — integrates natively with GitHub Code Scanning and VS Code
+	✔  CVSS Scoring — industry-standard severity ratings for every finding
+	✔  CWE Mapping — Common Weakness Enumeration classification for all findings
+	✔  LLM-Powered Fix Suggestions — actionable, context-specific remediation guidance
+	✔  CI/CD Native — blocks builds on critical findings; non-blocking for informational
+	✔  Incremental Scanning — only rescans changed code; fast feedback loop
+	✔  False Positive Suppression — VEX integration and confidence filtering
+	
+
+Expected Deliverables
+Category
+	Details
+	Trained Model
+	Serialised ML model (.pkl / .pt) with benchmark accuracy report
+	Scanning API
+	REST API with endpoints for code upload, scan status, and results
+	Dashboard
+	Kibana / custom React UI showing vulnerability trends, heat maps
+	CI Plugin
+	GitHub Actions action / GitLab CI template for pipeline integration
+	SARIF Reports
+	Machine-readable findings compatible with GitHub Security tab
+	________________
+
+
+PROJECT 04
+CloudWeaver
+GitOps Multi-Cloud Platform
+	
+
+Overview & Strategic Context
+CloudWeaver is a GitOps-native platform for managing infrastructure and application deployments across multiple cloud providers from a single Git source of truth. By 2025, GitOps has matured from a Kubernetes-specific delivery method to a foundational operational standard, with ArgoCD used in nearly 60% of surveyed Kubernetes clusters per the 2025 CNCF end-user survey.
+The platform engineering movement has positioned GitOps as the 'plumbing' of modern cloud-native delivery — ArgoCD or Flux are now day-one tools for platform teams. Akuity's KubeCon NA 2025 announcement extended GitOps to support not just Kubernetes but also VMs and serverless platforms, reflecting the industry's push toward hybrid multi-cloud GitOps.
+
+
+Problem Space
+✔  Configuration Drift — live cluster state diverges from declared state, causing silent failures
+	✔  Manual Deployment Errors — ad-hoc kubectl or console changes bypass review and leave no audit trail
+	✔  Inconsistent Environments — dev / staging / production diverge over time
+	✔  Slow Recovery — manual processes mean hours to recover from failed deployments
+	✔  Multi-Cloud Complexity — separate toolchains for AWS, GCP, Azure multiply operational overhead
+	✔  Secrets Management — environment-specific credentials scattered across pipelines and manifests
+	
+
+How It Works — GitOps Loop
+1
+	Developer updates YAML manifests or Terraform HCL files in the Git repository via a pull request.
+	2
+	PR Review — peers review infrastructure changes; security policy checks run via OPA/Kyverno. Required approvals gate the merge.
+	3
+	Merge Triggers — CI pipeline runs Terraform plan, generating a change preview ("drift report") showing exactly what will be created, modified, or destroyed.
+	4
+	ArgoCD Reconciliation — the GitOps operator detects the Git commit and automatically applies the updated Kubernetes manifests to the target cluster.
+	5
+	Terraform Apply — infrastructure provisioning runs in an isolated runner; new cloud resources (VPCs, databases, load balancers) are created or updated.
+	6
+	Health Check — ArgoCD monitors resource health (pod readiness, service endpoints). Unhealthy resources trigger automatic rollback to the previous Git commit.
+	7
+	Observability — Prometheus scrapes cluster metrics; Grafana renders deployment timelines, resource utilisation, and error rates.
+	8
+	Drift Detection — ArgoCD continuously compares live state to Git state. Any out-of-band change is flagged immediately and can be auto-remediated.
+	
+
+Architecture Components
+Category
+	Details
+	GitOps Operator
+	ArgoCD 2.10+ — continuous delivery, multi-cluster sync, ApplicationSets
+	IaC Tool
+	Terraform 1.7+ / OpenTofu — cloud resource provisioning, state management
+	Configuration Mgmt
+	Ansible — OS-level configuration, Kubernetes cluster hardening
+	API Layer
+	Kotlin / Spring Boot — platform control API, webhook handlers, RBAC
+	Secret Management
+	HashiCorp Vault + External Secrets Operator — secret injection without plaintext in Git
+	Policy Enforcement
+	OPA + Kyverno — admission control, policy-as-code for all K8s resources
+	Multi-Cloud Support
+	AWS (EKS), GCP (GKE), Azure (AKS) — Terraform provider abstraction
+	Observability
+	Prometheus + Grafana + OpenTelemetry — metrics, tracing, logging
+	Canary Deployments
+	Argo Rollouts — progressive delivery, automatic rollback on error rate
+	Promotion Engine
+	Kargo (Akuity) — promotion workflows across dev/staging/production
+	
+
+GitOps Principles Implemented
+✔  Declarative Configuration — desired state expressed in YAML/HCL, not imperative scripts
+	✔  Git as Single Source of Truth — no out-of-band changes; all changes via PR
+	✔  Continuous Reconciliation — ArgoCD corrects drift automatically within seconds
+	✔  Auditability — full Git history of every change; who, what, when, why
+	✔  Self-Healing — unhealthy resources auto-reconciled to last known-good state
+	✔  Pull-Based Model — cluster pulls from Git; no external push access to cluster required
+	✔  Progressive Delivery — canary and blue-green deployments with automated promotion criteria
+	✔  Immutable Infrastructure — infrastructure replaced rather than modified in-place
+	
+
+Technology Stack — Full Reference
+Category
+	Details
+	Backend
+	Kotlin 1.9 + Spring Boot 3.2
+	GitOps
+	ArgoCD 2.10+, Flux CD 2.5 (alternative), Kargo
+	IaC
+	Terraform 1.7+ / OpenTofu, Terragrunt
+	Config Management
+	Ansible (AWX for UI)
+	Cloud Providers
+	AWS, GCP, Azure via Terraform providers
+	Kubernetes
+	EKS, GKE, AKS (1.29+); Helm 3 for packaging
+	Secret Management
+	HashiCorp Vault + External Secrets Operator
+	Policy
+	OPA, Kyverno, Gatekeeper
+	Delivery
+	Argo Rollouts — canary, blue-green
+	Observability
+	Prometheus, Grafana, Loki, Tempo, OpenTelemetry Collector
+	CI
+	GitHub Actions, GitLab CI
+	
+
+Multi-Cloud Strategy
+✔  Provider Abstraction — Terraform modules abstract cloud-specific APIs behind a common interface
+	✔  Cross-Region HA — automatic failover configurations across AWS regions / GCP zones
+	✔  Cost Optimisation — Infracost integration shows cost delta per PR
+	✔  Compliance Across Clouds — Checkov scans Terraform plans for CIS Benchmark compliance
+	✔  Federated Identity — SPIFFE/SPIRE for workload identity across clouds
+	
+
+Expected Deliverables
+Category
+	Details
+	Platform
+	Working GitOps platform with ArgoCD managing multi-cloud K8s clusters
+	IaC Modules
+	Reusable Terraform modules for AWS, GCP, Azure
+	Secret Integration
+	Vault + ESO configuration for zero-plaintext secret management
+	Dashboard
+	Grafana: deployment timeline, resource health, cost tracking
+	Runbook
+	Disaster recovery, rollback, and drift remediation procedures
+	________________
+
+
+PROJECT 05
+ProofForge
+Blockchain Supply Chain Attestation
+	
+
+Overview & Strategic Context
+ProofForge provides cryptographic attestation of software artifacts using blockchain technology. Every build artifact is hashed and recorded on-chain, creating an immutable, verifiable chain of custody from source code commit to production deployment.
+By 2025, software supply chain security has matured into a compliance requirement. The US Executive Order 14028 mandated SBOMs for federal software procurement. SLSA 1.0 was released as a vendor-neutral framework. Sigstore became the de-facto standard for keyless artifact signing, with GitHub Actions natively generating SLSA provenance via OIDC tokens. The SLSA framework's in-toto attestation format (ITE-6) defines a standard envelope used by cosign, SLSA, and blockchain tools alike.
+
+
+Problem Space
+✔  SolarWinds-class attacks — build systems compromised, malicious code injected into signed binaries
+	✔  Log4Shell-class vulnerabilities — transitive dependencies introduce critical flaws invisible to developers
+	✔  Dependency Confusion — attackers publish packages matching internal names to public registries
+	✔  Unsigned Artifacts — no way to verify who built a binary and under what conditions
+	✔  Audit Trail Gaps — after a breach, investigators cannot reconstruct the build provenance
+	✔  Centralised Signing Failure — single HSM or signing server becomes a high-value attack target
+	
+
+How It Works — Attestation Flow
+1
+	Build Trigger — developer merges code; GitHub Actions CI run starts in an ephemeral, isolated environment.
+	2
+	Artifact Construction — Docker image built; SBOM generated (Syft → SPDX/CycloneDX format) listing every dependency.
+	3
+	Hash Computation — SHA-256 digest computed for the image manifest and each SBOM component.
+	4
+	Keyless Signing — cosign signs the image using GitHub Actions OIDC token via Sigstore Fulcio CA; signature logged to Rekor transparency log.
+	5
+	SLSA Provenance — signed in-toto attestation records: builder identity, source repo, git commit SHA, build parameters, environment variables.
+	6
+	Blockchain Anchoring — attestation hash + IPFS CID written to smart contract; block timestamp provides legal timestamping.
+	7
+	Registry Push — signed image + attestation pushed to OCI registry (GHCR, ECR, Artifact Registry).
+	8
+	Deployment Verification — Kyverno admission controller verifies: image is signed, provenance matches expected builder, SBOM exists, no critical CVEs in VEX block.
+	9
+	Audit Query — at any time, any stakeholder can query the smart contract to retrieve the full provenance chain for a given image digest.
+	
+
+Architecture Components
+Category
+	Details
+	Smart Contract
+	Solidity 0.8.x — ArtifactRegistry contract: hash storage, provenance linking, access control
+	Blockchain Network
+	Ethereum (production) / Polygon (low-cost) / Hyperledger Besu (private enterprise)
+	Development Tools
+	Hardhat — testing, deployment scripts, gas optimisation; Foundry for fuzz testing
+	IPFS
+	Content-addressed storage for full attestation documents; Pinata for pinning
+	Artifact Signing
+	Sigstore (cosign, Fulcio, Rekor) — keyless signing, transparency log
+	SBOM Tools
+	Syft (generation), Grype (vulnerability scanning against SBOM)
+	Framework
+	SLSA v1.0 — provenance schema, in-toto attestation format
+	Policy Enforcement
+	Kyverno — Kubernetes admission controller, signature + provenance verification
+	CI/CD
+	GitHub Actions with OIDC identity provider
+	Audit Interface
+	React frontend — provenance explorer, supply chain graph visualisation
+	
+
+SLSA Framework Levels
+Category
+	Details
+	Level 1
+	Build process is documented and outputs an SBOM. (Minimum baseline)
+	Level 2
+	Build uses version-controlled build scripts; signed provenance generated. (Target for most teams)
+	Level 3
+	Build platform is hardened; build environment is isolated and ephemeral. Network access restricted during build.
+	Level 4
+	Two-person review required; hermetically sealed build; strong provenance.
+	ProofForge targets SLSA Level 3 compliance out-of-the-box, with a migration path to Level 4 for regulated industries.
+
+
+Key Features
+✔  Keyless Signing — OIDC-based; no long-lived private keys to manage or leak
+	✔  Rekor Transparency Log — every signature is publicly logged; tampering is mathematically detectable
+	✔  Blockchain Timestamping — legally admissible artifact provenance with block timestamp
+	✔  SBOM-First Design — CycloneDX/SPDX SBOMs are first-class citizens, not afterthoughts
+	✔  VEX Integration — Vulnerability Exploitability eXchange statements suppress false positives
+	✔  Multi-Registry Support — GHCR, ECR, GAR, Docker Hub, private registries
+	✔  Audit Query API — retrieve full provenance chain for any image digest
+	✔  Supply Chain Graph — visual explorer showing dependency tree and attestation status
+	✔  Compliance Reports — automatic SLSA compliance reports for auditors
+	✔  Enterprise Mode — Hyperledger Besu private blockchain for regulated industries
+	
+
+Expected Deliverables
+Category
+	Details
+	Smart Contract
+	ArtifactRegistry.sol + Hardhat test suite + deployment scripts
+	SBOM Pipeline
+	Syft-based SBOM generation integrated into CI
+	Signing Workflow
+	cosign + Fulcio + Rekor in GitHub Actions
+	Policy Gates
+	Kyverno ClusterPolicies for admission control
+	Explorer UI
+	React provenance explorer with supply chain graph
+	Audit Docs
+	SLSA compliance checklist + audit log documentation
+	________________
+
+
+PROJECT 06
+QuantumLedger
+Post-Quantum Blockchain Explorer
+	
+
+Overview & Strategic Context
+QuantumLedger is a blockchain explorer enhanced with post-quantum cryptography (PQC), providing both a visualisation tool for blockchain data and a research platform for quantum-resistant cryptographic primitives.
+In August 2024, NIST released its first three finalised PQC standards after an eight-year international evaluation of 82 algorithms from 25 countries. The three standards — ML-KEM (FIPS 203), ML-DSA (FIPS 204), and SLH-DSA (FIPS 205) — are now ready for immediate deployment. In March 2025, NIST selected HQC as a fifth algorithm (backup for ML-KEM based on different mathematical assumptions). NIST is urging all organisations to begin migration now, as the threat model includes 'harvest now, decrypt later' attacks where adversaries collect encrypted data today to decrypt once quantum computers are capable.
+
+
+The Quantum Threat — Why It Matters Now
+Harvest Now, Decrypt Later (HNDL): Adversaries are already collecting encrypted blockchain transactions today.
+They will decrypt them retroactively once a Cryptographically Relevant Quantum Computer (CRQC) exists.
+Experts estimate a CRQC capable of breaking RSA-2048 / ECDSA may emerge within 10–15 years.
+Classical digital signature algorithms (ECDSA used in Bitcoin/Ethereum) will be broken by Shor's Algorithm.
+NIST plans to deprecate classical public-key algorithms at the 112-bit security level by 2031.
+
+
+PQC Algorithms Reference
+Category
+	Details
+	ML-KEM (FIPS 203)
+	Module-Lattice Key Encapsulation Mechanism. Primary algorithm for key exchange. Based on hardness of lattice problems. Replaces ECDH.
+	ML-DSA (FIPS 204)
+	Module-Lattice Digital Signature. Primary algorithm for signatures. Based on CRYSTALS-Dilithium. Replaces ECDSA.
+	SLH-DSA (FIPS 205)
+	Stateless Hash-Based Digital Signature. Based on SPHINCS+. Hash-based security, conservative design. Alternative signature scheme.
+	FN-DSA (FIPS 206)
+	Falcon lattice-based signature. Smaller signatures than ML-DSA but more complex implementation. Standard in development.
+	HQC (March 2025)
+	Hamming Quasi-Cyclic. Backup KEM for ML-KEM. Based on error-correcting codes (different math assumption). Standard expected 2027.
+	
+
+How It Works — Explorer Pipeline
+1
+	Data Ingestion — blockchain node (Ethereum full node or Hardhat local) exposes JSON-RPC API. Go/Rust indexer streams new blocks.
+	2
+	Transaction Parsing — each transaction is decoded: sender, receiver, value, input data, logs, receipt.
+	3
+	PQC Signature Verification — if a transaction includes a PQC-signed payload (in calldata), the explorer verifies the ML-DSA or SLH-DSA signature.
+	4
+	ZK Proof Verification (optional) — Zero-Knowledge proof components (zk-SNARKs) are verified for privacy-preserving transactions.
+	5
+	Indexing — parsed data stored in PostgreSQL + Elasticsearch for fast query and search.
+	6
+	API Layer — REST + WebSocket API exposes block data, transaction data, PQC verification results.
+	7
+	Frontend Rendering — React dashboard renders block explorer, transaction graph, address analytics, and PQC verification status.
+	8
+	Cryptographic Benchmarking — built-in performance comparison between classical (ECDSA) and PQC (ML-DSA) operations.
+	
+
+Architecture Components
+Category
+	Details
+	Core Language
+	Rust — cryptographic engine, block indexer (performance-critical)
+	Frontend
+	React 18 + TypeScript + Tailwind CSS — explorer UI
+	PQC Library
+	liboqs (Open Quantum Safe) — implementations of ML-KEM, ML-DSA, SLH-DSA, HQC
+	Blockchain Node
+	Ethereum (go-ethereum / geth) or Hardhat (local)
+	ZK Library
+	bellman / arkworks (Rust) — zk-SNARK proving and verification
+	Database
+	PostgreSQL + Elasticsearch — block/tx storage and full-text search
+	API
+	Axum (Rust) REST API + WebSocket for real-time block streaming
+	Visualisation
+	D3.js — transaction graph, address relationship maps
+	Testing
+	cargo test + Foundry — Rust unit tests + Solidity contract tests
+	
+
+Key Features
+✔  Full Blockchain Explorer — blocks, transactions, addresses, token transfers, contract events
+	✔  PQC Signature Verification — ML-DSA and SLH-DSA verification integrated into transaction display
+	✔  ZK-Proof Integration — display and verify zk-SNARK proofs for privacy transactions
+	✔  Cryptographic Algorithm Comparison — side-by-side benchmarks: key sizes, sign/verify speed, ECDSA vs ML-DSA
+	✔  Quantum-Safe Transaction Submission — submit transactions signed with PQC keys
+	✔  Harvest-Now-Decrypt-Later Visualisation — show which stored transactions are vulnerable
+	✔  Migration Readiness Score — assess a wallet's or contract's exposure to quantum attacks
+	✔  Multi-Chain Support — Ethereum, Polygon, local Hardhat, custom EVM chains
+	✔  Real-Time Updates — WebSocket streaming of new blocks and transactions
+	✔  Open Research Platform — extensible for academic cryptographic experiments
+	
+
+Post-Quantum Migration Roadmap (for any system)
+✔  Step 1: Cryptographic Inventory — identify all uses of RSA, ECDSA, ECDH in your codebase and dependencies
+	✔  Step 2: Prioritise by Sensitivity — long-lived data (financial records, medical) migrates first
+	✔  Step 3: Deploy Hybrid Schemes — run classical + PQC in parallel; both must verify (defence in depth)
+	✔  Step 4: Replace Key Exchange — swap ECDH for ML-KEM; this protects data-in-transit first
+	✔  Step 5: Replace Signatures — migrate ECDSA to ML-DSA for authentication and signing
+	✔  Step 6: Update Protocols — TLS 1.3 with PQC extensions (IETF drafts in progress)
+	✔  Step 7: Achieve Crypto-Agility — architecture allows algorithm swap without full rebuild
+	
+
+Expected Deliverables
+Category
+	Details
+	Explorer UI
+	Full-featured React blockchain explorer with PQC indicators
+	PQC Engine
+	Rust library wrapping liboqs for ML-KEM, ML-DSA, SLH-DSA
+	Benchmark Suite
+	Performance comparison report: classical vs PQC algorithm metrics
+	Smart Contracts
+	Test contracts demonstrating PQC signature verification on-chain
+	Research Report
+	Migration analysis: what breaks when quantum computers arrive
+	________________
+
+
+PROJECT 07
+NeuroOps
+AI-Augmented DevSecOps Pipeline
+	
+
+Overview & Strategic Context
+NeuroOps is an AI co-pilot for DevSecOps teams that automates code review, log analysis, threat summarisation, and operational recommendations. It embeds large language models (LLMs) and agentic AI into the day-to-day engineering workflow, reducing manual cognitive load while improving security outcomes.
+The 2025 DevSecOps landscape is defined by the rise of agentic AI — autonomous agents that perform goal-driven security tasks with minimal human supervision. Unlike traditional automation (which runs fixed scripts), agentic AI understands context, reasons about risk, and adapts its actions. Platforms like Harness, GitHub (Copilot Autofix), and Snyk are embedding LLMs directly into remediation workflows. By late 2025 and into 2026, AI-driven automation is expected to fundamentally reshape how DevSecOps operates.
+
+
+Problem Space
+✔  Alert Fatigue — security teams receive thousands of alerts daily; most go uninvestigated
+	✔  Slow Incident Response — mean-time-to-detect (MTTD) and mean-time-to-respond (MTTR) measured in hours
+	✔  Code Review Bottlenecks — senior engineers are scarce; PRs queue for days awaiting security review
+	✔  Inconsistent Security Culture — security practices vary across teams and individuals
+	✔  Log Analysis Overload — TB/day of logs; manual analysis is impossible at scale
+	✔  Skill Gaps — not every developer understands secure coding; mistakes are repeated across teams
+	
+
+How It Works — NeuroOps Agents
+1
+	Code Review Agent — triggered on every PR. Reads the diff, understands the change context, identifies security anti-patterns, and posts inline comments with CWE references and fix suggestions.
+	2
+	Dependency Audit Agent — runs SCA scan, then explains the risk of each vulnerable dependency in plain English, suggests upgrade paths, and opens auto-fix PRs where safe.
+	3
+	Log Intelligence Agent — ingests application, infrastructure, and security logs. Clusters anomalies, identifies root causes, summarises incidents in human-readable language.
+	4
+	Threat Intelligence Agent — fetches new CVEs, CISA KEV alerts, and threat reports. Correlates with the organisation's tech stack. Prioritises which threats require immediate action.
+	5
+	Pipeline Optimisation Agent — analyses CI/CD pipeline performance data. Identifies bottlenecks, suggests parallel job opportunities, flags security gaps in pipeline configuration.
+	6
+	Runbook Generation Agent — after an incident, generates a full post-mortem report, updated runbook, and suggested preventive controls automatically.
+	7
+	Chat Interface — engineers can ask NeuroOps questions: 'What CVEs affect our production stack?' 'Why did the last deployment fail?' 'What does this Falco alert mean?'
+	
+
+Architecture Components
+Category
+	Details
+	LLM Backend
+	Claude (claude-sonnet-4-6) / GPT-4o — primary reasoning engine
+	Agent Orchestration
+	LangChain / LangGraph — agent workflows, tool use, memory management
+	Code Analysis
+	CodeQL, Semgrep — pre-analysis feeding context to LLM
+	Log Platform
+	ELK Stack (Elasticsearch + Logstash + Kibana) — log ingestion and storage
+	Alert Platform
+	Prometheus + Alertmanager — metric alerts; PagerDuty integration
+	Knowledge Base
+	Vector database (Qdrant / Pinecone) — RAG over CVE database, runbooks, policies
+	API
+	FastAPI — agent coordination API, webhook receivers
+	Orchestration
+	Kubernetes — agent pod deployment, autoscaling
+	Integration
+	GitHub, GitLab, Jira, Slack, PagerDuty webhooks
+	Memory
+	Redis — short-term agent memory; PostgreSQL — long-term session history
+	
+
+Key Features
+✔  Agentic Security Testing — agents autonomously run scans and triage findings
+	✔  AI Code Review — LLM reviews PRs for security anti-patterns with CWE citations
+	✔  Intelligent Alert Triage — reduces alert noise by 60-80% through AI-driven prioritisation
+	✔  Natural Language Log Analysis — ask questions about your logs in plain English
+	✔  Auto-Remediation PRs — agent opens pull requests with code fixes for common vulnerabilities
+	✔  Threat Intelligence Correlation — maps new CVEs to your specific technology stack
+	✔  Post-Incident Automation — generates post-mortems and updated runbooks automatically
+	✔  RAG-Powered Q&A — answers questions using your organisation's own documentation
+	✔  Pipeline Optimisation — identifies CI/CD bottlenecks and configuration gaps
+	✔  Multi-Platform Integration — GitHub, GitLab, Jira, Slack, PagerDuty out-of-the-box
+	
+
+AI Safety & Governance
+✔  Human-in-the-Loop — all auto-remediation PRs require human approval before merge
+	✔  Audit Trail — every agent decision logged with reasoning, evidence, and model version
+	✔  Prompt Injection Defence — input sanitisation and output validation for all LLM interactions
+	✔  Model Versioning — track which model version produced each recommendation
+	✔  Bias Monitoring — monitor for systematic false positives against specific code patterns
+	✔  Rate Limiting — prevent runaway agent costs with per-agent token budgets
+	
+
+Expected Deliverables
+Category
+	Details
+	Agent Platform
+	Multi-agent system with code review, log analysis, and threat intel agents
+	Chat Interface
+	Natural language Q&A interface integrated with Slack / web UI
+	Dashboard
+	NeuroOps control centre: agent activity, alert trends, MTTD/MTTR metrics
+	Integration Library
+	Webhook connectors for GitHub, GitLab, Jira, Slack
+	Accuracy Report
+	Benchmark: false positive rate, finding recall, remediation acceptance rate
+	________________
+
+
+PROJECT 08
+ChainGuard
+Secure Supply Chain System
+	
+
+Overview & Strategic Context
+ChainGuard is an end-to-end secure supply chain platform that tracks, verifies, and enforces integrity across the entire software development lifecycle — from source code to deployed artifact. It combines cryptographic verification, policy-as-code, and blockchain anchoring to deliver provenance you can prove.
+By May 2025, supply chain security has become table stakes for federal, financial, health-tech, and enterprise SaaS organisations. Open standards have stabilised: SLSA 1.1 RC2 (April 2025), SPDX 3.0, and Sigstore's keyless signing ecosystem are now vendor-neutral baselines. The GUAC (Graph for Understanding Artifact Composition) project, contributed by Google, provides supply chain metadata aggregation at scale. The key insight from Faith Forge Labs' 2025 report: 'tooling is mature — SLSA Level 2 achievable in an afternoon; Level 3 in weeks.'
+
+
+Problem Space
+✔  Build System Compromise — attackers target CI/CD infrastructure to inject malicious code upstream of signing
+	✔  Dependency Confusion — internal package names exploited by malicious public packages
+	✔  Typosquatting — malicious packages with near-identical names to popular libraries
+	✔  Unsigned Production Artifacts — no cryptographic guarantee of who built a binary
+	✔  SBOM Gaps — components present in production but absent from declared inventory
+	✔  Audit Evidence — post-breach forensics cannot reconstruct the full build provenance
+	✔  Compliance Mandates — EO 14028, SSDF, and sector-specific regulations require SBOM + provenance
+	
+
+How It Works — Full Supply Chain Pipeline
+1
+	Source Verification — developer commit is signed with SSH key or GPG. Branch protection requires signed commits. Gittuf enforces repository security policies.
+	2
+	Dependency Scanning — every dependency updated via automated Renovate/Dependabot PRs. SCA scanner (Snyk/Trivy) checks CVEs; Capslock analyses capability risk.
+	3
+	Build Isolation — build runs in an ephemeral, hermetically sealed GitHub Actions runner. No network access to public internet; only allowlisted internal registries.
+	4
+	SBOM Generation — Syft generates a CycloneDX 1.5 SBOM listing every component with version, hash, and licence. SBOM is cryptographically signed.
+	5
+	Artifact Signing — cosign signs the output image/binary. Signature and certificate logged to Rekor (Sigstore transparency log). No private key leaves CI.
+	6
+	SLSA Provenance — GitHub Actions OIDC token used to generate signed in-toto provenance attestation. Specifies: repository, branch, commit SHA, workflow, runner environment.
+	7
+	GUAC Ingestion — SBOM + provenance + VEX documents fed into GUAC knowledge graph. Enables cross-artifact dependency analysis at organisation scale.
+	8
+	Blockchain Anchoring — attestation root hash written to smart contract on Hyperledger Besu or Ethereum. Provides legally defensible timestamped record.
+	9
+	Policy Enforcement — Kyverno ClusterPolicy in Kubernetes admission controller verifies: signed image, valid SBOM, provenance matches expected builder, no unresolved critical CVEs.
+	10
+	Runtime Monitoring — Falco monitors deployed containers; any violation (unexpected process, network connection) triggers alert and optional pod quarantine.
+	11
+	Audit Portal — stakeholders query the provenance graph: 'show me every image in production that contains log4j > 2.14'.
+	
+
+Architecture Components
+Category
+	Details
+	Signing
+	Sigstore (cosign, Fulcio CA, Rekor transparency log) — keyless artifact signing
+	SBOM
+	Syft (generation), Grype (scanning), cdxgen (alternative)
+	Provenance
+	SLSA v1.1, in-toto ITE-6, GitHub Actions native attestation support
+	Dependency Analysis
+	GUAC (Graph for Understanding Artifact Composition) — cross-artifact supply chain graph
+	Blockchain
+	Solidity + Hyperledger Besu (permissioned) or Ethereum (public) — provenance anchoring
+	Policy
+	Kyverno + OPA — Kubernetes admission control + general policy
+	Repository Guard
+	Gittuf — repository-level security policies (branch protection, signing requirements)
+	Secret Detection
+	GitGuardian + truffleHog — real-time secrets scanning
+	Runtime
+	Falco eBPF — behavioural runtime security in Kubernetes
+	Orchestration
+	Python (FastAPI) + Kubernetes — platform API, workflow coordination
+	Audit UI
+	React — provenance explorer, compliance dashboard, SBOM viewer
+	
+
+SBOM Standards Reference
+Category
+	Details
+	SPDX 3.0
+	Linux Foundation standard. XML/JSON/RDF formats. Preferred for licence compliance and legal review.
+	CycloneDX 1.5
+	OWASP standard. JSON/XML. Preferred for security tooling; richer vulnerability context, VEX support.
+	SWID Tags
+	ISO/IEC 19770-2. Software identification tags. Used in enterprise asset management.
+	VEX
+	Vulnerability Exploitability eXchange. Supplements SBOM; clarifies which vulnerabilities are not exploitable in context.
+	
+
+Key Features
+✔  End-to-End Provenance — from git commit to running container, every step attested and verifiable
+	✔  Keyless Signing — OIDC-based; zero key management overhead
+	✔  SBOM First-Class — CycloneDX/SPDX SBOMs generated and signed at every build
+	✔  GUAC Integration — aggregate and query supply chain metadata across the organisation
+	✔  Blockchain Anchoring — legally defensible, tamper-evident timestamped records
+	✔  Admission Control — Kubernetes blocks deployment of unsigned or unattested images
+	✔  Runtime Enforcement — Falco detects attacks in running containers
+	✔  Compliance Reports — automated SLSA, EO 14028, SSDF compliance evidence generation
+	✔  Dependency Graph Explorer — visualise transitive dependencies and their security status
+	✔  Incident Forensics — reconstruct the full build provenance for any artifact post-breach
+	
+
+Technology Stack — Full Reference
+Category
+	Details
+	Language
+	Python 3.11 + Solidity 0.8.x
+	API
+	FastAPI — platform control, webhook handlers, query API
+	Signing
+	Sigstore cosign + Fulcio + Rekor
+	SBOM
+	Syft, cdxgen, Grype
+	Graph
+	GUAC (Go) — supply chain knowledge graph
+	Policy
+	Kyverno, OPA, Gatekeeper
+	Blockchain
+	Hyperledger Besu (permissioned) / Ethereum
+	Smart Contracts
+	Solidity + Hardhat + Foundry
+	Repository
+	Gittuf — Git repository security policy engine
+	Runtime
+	Falco 0.37+ (eBPF)
+	Monitoring
+	Prometheus + Grafana + ELK Stack
+	Orchestration
+	Kubernetes 1.29+ — EKS / GKE / AKS
+	
+
+Compliance Alignment
+✔  SLSA v1.1 — Supply-chain Levels for Software Artifacts (Level 3 target)
+	✔  EO 14028 — US Executive Order on Improving the Nation's Cybersecurity (SBOM mandate)
+	✔  SSDF — NIST Secure Software Development Framework (SP 800-218)
+	✔  CISA Software Supply Chain Security Guidance
+	✔  NIST SP 800-161 (Cybersecurity Supply Chain Risk Management)
+	✔  ISO/IEC 27036 — Supplier relationships information security
+	
+
+Expected Deliverables
+Category
+	Details
+	Platform API
+	FastAPI backend orchestrating the full supply chain pipeline
+	Smart Contracts
+	Provenance registry on Hyperledger Besu + Hardhat tests
+	SBOM Pipeline
+	Automated Syft/cdxgen SBOM generation in CI
+	Policy Bundle
+	Kyverno policies for admission control + OPA compliance checks
+	Audit Portal
+	React frontend: SBOM viewer, provenance explorer, compliance dashboard
+	GUAC Integration
+	GUAC ingestion pipeline for cross-artifact dependency queries
+	________________
+
+
+Summary Comparison Matrix
+A quick-reference overview of all eight platforms for planning, prioritisation, and selection.
+
+
+Project
+	Primary Language
+	Key Tech
+	Core Output
+	Best For
+	TrustMesh
+	Kotlin + Python
+	Kubernetes, Istio, OPA, Ethereum
+	Zero-Trust Gateway + AI Risk Scoring
+	Cloud-native microservice security
+	OpsShield
+	Python
+	GitHub Actions, Sigstore, Falco, Solidity
+	Secure CI/CD + Blockchain Attestation
+	DevSecOps automation, supply chain
+	VulnSight
+	Python
+	Scikit-learn, PyTorch, CodeQL, FastAPI
+	ML Vulnerability Scanner + SARIF Reports
+	Automated code security scanning
+	CloudWeaver
+	Kotlin
+	ArgoCD, Terraform, Vault, Prometheus
+	GitOps Multi-Cloud Platform
+	Infrastructure automation, multi-cloud
+	ProofForge
+	Solidity + Python
+	Hardhat, IPFS, Sigstore, SLSA
+	Blockchain Artifact Registry
+	Software supply chain integrity
+	QuantumLedger
+	Rust + React
+	liboqs, Ethereum, D3.js, PostgreSQL
+	PQC Blockchain Explorer
+	Quantum-safe cryptography research
+	NeuroOps
+	Python
+	LangChain, FastAPI, ELK, Kubernetes
+	AI DevSecOps Co-Pilot
+	Reducing manual security toil
+	ChainGuard
+	Python + Solidity
+	Sigstore, GUAC, Kyverno, Falco, Besu
+	End-to-End Supply Chain Security
+	Regulated industries, compliance-heavy
+	
+
+Technology Cross-Reference
+Technologies appearing across multiple projects (indicating strategic investment value):
+✔  Kubernetes — used in all 8 projects; the universal orchestration substrate
+	✔  Open Policy Agent (OPA) — policy-as-code foundation across 5 projects
+	✔  Sigstore (cosign + Fulcio + Rekor) — standard signing stack in Projects 2, 5, 8
+	✔  Prometheus + Grafana — observability baseline in 6 projects
+	✔  Solidity / Ethereum — blockchain layer in Projects 1, 2, 5, 6, 8
+	✔  FastAPI (Python) — consistent REST API framework across 4 projects
+	✔  SLSA Framework — supply chain standard in Projects 2, 5, 8
+	✔  Falco — runtime security across Projects 2, 8 (applicable to all Kubernetes deployments)

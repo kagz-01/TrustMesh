@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: ./gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - AI_ENGINE_URL=http://ai-engine:8000
+      - OPA_URL=http://opa:8181
+    depends_on:
+      - ai-engine
+      - opa
+
+  ai-engine:
+    build:
+      context: ./ai-engine
+    ports:
+      - "8000:8000"
+
+  opa:
+    image: openpolicyagent/opa:latest
+    ports:
+      - "8181:8181"
+    command:
+      - "run"
+      - "--server"
+      - "--log-level=debug"
+
+  management-ui:
+    build:
+      context: ./management-ui
+    ports:
+      - "3000:3000"
+    environment:
+      - GATEWAY_URL=http://gateway:8080
