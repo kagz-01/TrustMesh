@@ -1,56 +1,48 @@
 package com.trustmesh.gateway
 
 import org.springframework.cloud.gateway.filter.GatewayFilter
+import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
 import java.util.logging.Logger
 
 @Component
-class ZeroTrustFilterFactory(private val webClientBuilder: WebClient.Builder) : AbstractGatewayFilterFactory<ZeroTrustFilterFactory.Config>(Config::class.java) {
+class ZeroTrustFilterFactory(
+    private val webClientBuilder: WebClient.Builder
+) : AbstractGatewayFilterFactory<ZeroTrustFilterFactory.Config>(Config::class.java) {
 
     private val logger = Logger.getLogger(ZeroTrustFilterFactory::class.java.name)
     private val aiEngineUrl = System.getenv("AI_ENGINE_URL") ?: "http://localhost:8000"
     private val opaUrl = System.getenv("OPA_URL") ?: "http://localhost:8181"
 
-    class Config {
-        // Configuration properties can go here
-    }
+    class Config
 
     override fun apply(config: Config): GatewayFilter {
-        return GatewayFilter { exchange, chain ->
-            val request = exchange.request
-            val identityHeader = request.headers.getFirst("X-User-ID")
-            
-            // Assume identity is verified if header is present and starts with 'did:'
+        return GatewayFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->
+            val identityHeader = exchange.request.headers.getFirst("X-User-ID")
             val isIdentityVerified = identityHeader != null && identityHeader.startsWith("did:")
 
-            // Synthesize some metadata for the AI engine based on request
-            val latencyMs = Math.random() * 100 // Simulate latency
-            val volume = 10.0
-            val geoDist = 50.0
-            
-            val aiRequestPayload = mapOf(
-                "latency_ms" to latencyMs,
-                "request_volume_per_min" to volume,
-                "geo_distance_km" to geoDist
+            val aiPayload = mapOf(
+                "latency_ms" to (Math.random() * 100),
+                "request_volume_per_min" to 10.0,
+                "geo_distance_km" to 50.0
             )
 
-            // 1. Call AI Engine
-            val webClient = webClientBuilder.build()
-            
-            webClient.post()
+            val client = webClientBuilder.build()
+
+            client.post()
                 .uri("$aiEngineUrl/predict")
-                .bodyValue(aiRequestPayload)
+                .bodyValue(aiPayload)
                 .retrieve()
                 .bodyToMono(Map::class.java)
                 .flatMap { aiResponse ->
                     val riskScore = (aiResponse["risk_score"] as Number).toDouble()
-                    logger.info("AI Risk Score: $riskScore")
+                    logger.info("[TrustMesh] AI Risk Score: $riskScore | Identity verified: $isIdentityVerified")
 
-                    // 2. Call OPA
                     val opaPayload = mapOf(
                         "input" to mapOf(
                             "identity_verified" to isIdentityVerified,
@@ -58,28 +50,26 @@ class ZeroTrustFilterFactory(private val webClientBuilder: WebClient.Builder) : 
                         )
                     )
 
-                    webClient.post()
+                    client.post()
                         .uri("$opaUrl/v1/data/trustmesh/authz/allow")
                         .bodyValue(opaPayload)
                         .retrieve()
                         .bodyToMono(Map::class.java)
-                        .flatMap opaFlatMap@{ opaResponse ->
-                            val result = opaResponse["result"] as? Boolean ?: false
-                            logger.info("OPA Decision: $result")
+                        .flatMap { opaResponse ->
+                            val allowed = opaResponse["result"] as? Boolean ?: false
+                            logger.info("[TrustMesh] OPA Decision: $allowed")
 
-                            if (result) {
-                                // Request is allowed
-                                return@opaFlatMap chain.filter(exchange)
+                            if (allowed) {
+                                chain.filter(exchange)
                             } else {
-                                // Request is denied
-                                exchange.response.setStatusCode(HttpStatus.FORBIDDEN)
-                                return@opaFlatMap exchange.response.setComplete()
+                                exchange.response.statusCode = HttpStatus.FORBIDDEN
+                                exchange.response.setComplete()
                             }
                         }
                 }
                 .onErrorResume { e ->
-                    logger.severe("Zero Trust verification failed: ${e.message}")
-                    exchange.response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR)
+                    logger.severe("[TrustMesh] Zero Trust check failed: ${e.message}")
+                    exchange.response.statusCode = HttpStatus.SERVICE_UNAVAILABLE
                     exchange.response.setComplete()
                 }
         }

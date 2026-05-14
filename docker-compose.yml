@@ -24,12 +24,12 @@ services:
     ports:
       - "8181:8181"
     volumes:
-      - ./opa:/opa
+      - ./opa/policy.rego:/policy.rego
     command:
       - "run"
       - "--server"
       - "--log-level=debug"
-      - "/opa/policy.rego"
+      - "/policy.rego"
 
   management-ui:
     build:
